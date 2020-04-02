@@ -35,7 +35,22 @@ Error日志
 UnsatisfiedDependencyException: Error creating bean with name 'catServiceImpl': Unsatisfied dependency expressed through field 'catDAO'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'catDAO': Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Not a managed type: class com.zzj.catkg.facade.entity.Cat
 ```
 
+2. 子模块cat 找不到 另一个子模块的类  war 依赖 jar 打包方式的类，但是相似pom配置的另一个程序是可以的，唯一区别在<artifactId>spring-boot-starter-data-jpa</artifactId>
 
+    ```
+    程序包com.zzj.catkg.facade.entity不存在
+    看了下maven 开始有警告信息
+     'dependencies.dependency.version' for org.junit.jupiter:junit-jupiter:jar is either LATEST or RELEASE (both of them are being deprecated) @ com.zzj:catkg:0.0.1, Z:\0_My_Project\catkg\pom.xml, line 90, column 22
+     
+     mvn dependency:tree
+     确认是存在的
+     
+     看到maven的文档说，是能自动拓扑排序，保证依赖项先编译的
+     
+     最后没找到问题的解决方法，改依赖结构， 和上级pom改组合模式
+    ```
+
+    TODO  facade 和 根目录的Pom 存在需要保证相同的依赖，不够优雅
 
 
 
@@ -53,3 +68,6 @@ show tables;
 DESCRIBE table;
 ```
 
+### 参考内容
+
+1. spring data jpa 做测试可以在https://github.com/spring-projects/spring-data-examples 这里看到
